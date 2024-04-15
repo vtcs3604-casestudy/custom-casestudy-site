@@ -1,5 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
+import { config } from './config' ;
+import { PublicClientApplication } from './@azure/msal-browser'
 
 function App() {
   
