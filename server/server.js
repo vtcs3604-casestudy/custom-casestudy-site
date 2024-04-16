@@ -2,7 +2,11 @@ require('dotenv').config()
 
 const express = require('express')
 const mongoose = require('mongoose')
-const workoutRoutes = require('./routes/editProfile')
+
+// Routes import
+const profileRoutes = require('./routes/profile')
+const searchRoutes = require('./routes/search')
+const fileRoutes = require('./routes/file')
 
 // express app
 const app = express()
@@ -13,10 +17,27 @@ app.use((req, res, next) => {
   next()
 })
 
-// routes
-app.get('/', (req, res) => {
+// *****************************************************************************
+// START OF ROUTES
+// *****************************************************************************
+
+// Test route
+app.get('/test', (req, res) => {
   res.json({mssg: 'Welcome to the app'})
 })
+
+// Routes for search results
+app.use('/api/search', searchRoutes)
+
+// Routes for profile edits
+app.use('/api/profile', profileRoutes)
+
+// Routes for file access
+app.use('/files', fileRoutes)
+
+// *****************************************************************************
+// END OF ROUTES
+// *****************************************************************************
 
 // listen for requests
 app.listen(process.env.PORT, () => {
