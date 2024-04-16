@@ -25,10 +25,6 @@ export const NavigationBar = () => {
             .catch((error) => console.log(error));
     };
 
-    const handleLoginRedirect = () => {
-        instance.loginRedirect(loginRequest).catch((error) => console.log(error));
-    };
-
     const handleLogoutPopup = () => {
         instance
             .logoutPopup({
@@ -36,10 +32,6 @@ export const NavigationBar = () => {
                 account: instance.getActiveAccount(),
             })
             .catch((error) => console.log(error));
-    };
-
-    const handleLogoutRedirect = () => {
-        instance.logoutRedirect().catch((error) => console.log(error));
     };
 
     /**
@@ -55,35 +47,12 @@ export const NavigationBar = () => {
                 </a>
                 <AuthenticatedTemplate>
                     <div className="collapse navbar-collapse justify-content-end">
-                        <DropdownButton
-                            variant="warning"
-                            drop="start"
-                            title={activeAccount ? activeAccount.name : 'Unknown'}
-                        >
-                            <Dropdown.Item as="button" onClick={handleLogoutPopup}>
-                                Sign out using Popup
-                            </Dropdown.Item>
-                            <Dropdown.Item as="button" onClick={handleLogoutRedirect}>
-                                Sign out using Redirect
-                            </Dropdown.Item>
-                        </DropdownButton>
+                        <button onClick={handleLogoutPopup}>Log Out</button>
                     </div>
                 </AuthenticatedTemplate>
                 <UnauthenticatedTemplate>
                     <div className="collapse navbar-collapse justify-content-end">
-                        <DropdownButton
-                            variant="secondary"
-                            className="justify-content-end ml-auto"
-                            title="Sign In"
-                            drop="start"
-                        >
-                            <Dropdown.Item as="button" onClick={handleLoginPopup}>
-                                Sign in using Popup
-                            </Dropdown.Item>
-                            <Dropdown.Item as="button" onClick={handleLoginRedirect}>
-                                Sign in using Redirect
-                            </Dropdown.Item>
-                        </DropdownButton>
+                        <button onClick={handleLoginPopup}>Log In</button>
                     </div>
                 </UnauthenticatedTemplate>
             </Navbar>
