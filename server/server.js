@@ -21,11 +21,6 @@ app.use((req, res, next) => {
 // START OF ROUTES
 // *****************************************************************************
 
-// Test route
-app.get('/test', (req, res) => {
-  res.json({mssg: 'Welcome to the app'})
-})
-
 // Routes for search results
 app.use('/api/search', searchRoutes)
 
@@ -39,16 +34,11 @@ app.use('/files', fileRoutes)
 // END OF ROUTES
 // *****************************************************************************
 
-// listen for requests
-app.listen(process.env.PORT, () => {
-  console.log('listening on port', process.env.PORT)
-})
-
 // connect to mongoose
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
-    app.listen(process.env.PORT, ()=> {
-      console.log('connected to db and listening on port', process.env.PORT)
+    app.listen(process.env.PORT, () => {
+      console.log('listening on port', process.env.PORT)
     })
   })
   .catch((error) => {
