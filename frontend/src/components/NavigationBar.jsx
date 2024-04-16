@@ -1,5 +1,5 @@
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from '@azure/msal-react';
-import { Navbar, Dropdown, DropdownButton } from 'react-bootstrap';
+import { Navbar } from 'react-bootstrap';
 import { loginRequest } from '../authConfig';
 
 export const NavigationBar = () => {
