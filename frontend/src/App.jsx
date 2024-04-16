@@ -4,8 +4,12 @@
  */
 
 import { MsalProvider } from '@azure/msal-react';
-import { Home } from './pages/home';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
+import { Home } from './pages/home';
+import { Search } from './pages/search'
+
+import { NavigationBar } from './components/NavigationBar';
 import './styles/App.css';
 
 /**
@@ -18,11 +22,18 @@ import './styles/App.css';
 const App = ({ instance }) => {
     
     return (
-        <MsalProvider instance={instance}>
-            <div className="App">
-                <Home/>
-            </div>
-        </MsalProvider>
+        <BrowserRouter>
+            <MsalProvider instance={instance}>
+                <div className="App">
+                    <NavigationBar/>
+                    <br/>
+                    <Routes>
+                        <Route path='/' element={<Home/>} />
+                        <Route path='/search' element={<Search/>} />
+                    </Routes>
+                </div>
+            </MsalProvider>
+        </BrowserRouter>
     );
 };
 
