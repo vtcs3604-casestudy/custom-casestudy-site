@@ -14,6 +14,19 @@ const getProfile = async (req, res) => {
 }
 
 // Update profile
+const updateProfile = async (req, res) => {
+  const { username } = req.params
+  
+  const profile = await Profile.findOneAndUpdate({username: username}, {
+    ...req.body
+  })
+
+  if (!profile) {
+    return res.status(400).json({error: 'No such profile'})
+  }
+
+  res.status(200).json(profile)
+}
 
 // Create profile
 const createProfile = async (req, res) => {
@@ -31,5 +44,6 @@ const createProfile = async (req, res) => {
 // Export functions
 module.exports = {
   createProfile,
-  getProfile
+  getProfile,
+  updateProfile
 }
