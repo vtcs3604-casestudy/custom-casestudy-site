@@ -4,19 +4,24 @@ const express = require('express')
 const mongoose = require('mongoose')
 const workoutRoutes = require('./routes/editProfile')
 
-
 // express app
-// run with nodemon server.js
 const app = express()
 
-// Calls for every request
+// middleware
 app.use((req, res, next) => {
   console.log(req.path, req.method)
   next()
 })
 
-// routes (set path at /api)
-//app.use('/api/editProfile', workoutRoutes)
+// routes
+app.get('/', (req, res) => {
+  res.json({mssg: 'Welcome to the app'})
+})
+
+// listen for requests
+app.listen(process.env.PORT, () => {
+  console.log('listening on port', process.env.PORT)
+})
 
 // connect to mongoose
 mongoose.connect(process.env.MONGO_URI)
