@@ -2,6 +2,7 @@ import React from 'react';
 import { AuthenticatedTemplate, useMsal, UnauthenticatedTemplate } from '@azure/msal-react';
 import { Container } from 'react-bootstrap';
 import { IdTokenData } from '../../components/DataDisplay';
+import SearchBar from '../../components/SearchBar';
 
 /**
  * Creates the homepage for the website
@@ -18,9 +19,9 @@ export const Home = () => {
     
     return (
         <>
-            <h5>
-                <center>Welcome to the Microsoft Authentication Library For React Tutorial</center>
-            </h5>
+            <h1>
+                <center>Case study library</center>
+            </h1>
             <AuthenticatedTemplate>
                 <p><center>You are logged in {activeAccount ? activeAccount.username : 'Unknown'}</center></p>
             </AuthenticatedTemplate>
@@ -36,6 +37,11 @@ export const Home = () => {
                 <h5 className="card-title">Please sign-in to see your profile information.</h5>
             </UnauthenticatedTemplate>
             <br />
+            <SearchBar></SearchBar>
+            <p2 className="proj-des"> This site is a repository for case studies 
+            that are conducted by students enrolled in CS3604: Professionalism in Computing, 
+            in which students can browse case studies done by previous students, as well as 
+            upload their own case study.</p2>
             <AuthenticatedTemplate>
                 <footer>
                     <center>
