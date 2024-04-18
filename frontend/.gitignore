@@ -3,6 +3,9 @@
 # Ignore config files, see the github for information
 /src/authConfig.js
 
+# Ignore files
+/public/files
+
 # Default react ignore statements below
 
 # dependencies
