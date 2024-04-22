@@ -1,13 +1,13 @@
 const express = require('express')
+const {
+  getIDsFromTitle,
+  getIDsFromTag
+} = require('../controllers/searchController')
 
 const router = express.Router()
 
-router.get('/title/:searchString', (req, res) => {
-  res.json({mssg: 'GET title search'})
-})
+router.get('/title/:searchString', getIDsFromTitle)
 
-router.get('/tag/:tag', (req, res) => {
-  res.json({mssg: 'GET tag search'})
-})
+router.get('/tag/:tag', getIDsFromTag)
 
 module.exports = router
