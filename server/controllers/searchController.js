@@ -22,7 +22,13 @@ const getIDsFromTag = async (req, res) => {
   res.status(200).json(ids)
 }
 
+const getListOfTags = async (req, res) => {
+  const tags = await Profile.distinct('tags');
+  res.status(200).json(tags)
+}
+
 module.exports = {
   getIDsFromTitle,
-  getIDsFromTag
+  getIDsFromTag,
+  getListOfTags
 }
