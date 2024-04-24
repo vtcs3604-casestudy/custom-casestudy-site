@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useRef, useState } from 'react';
 import { SearchResult } from '../../components/SearchResult/SearchResult';
 import SearchBar from '../../components/SearchBar';
 import './search.css'
@@ -18,7 +18,9 @@ export const Search = () => {
     const [searchResults, setSearchResults] = useState(null); // List of user ids returned from search
     const [pageNumber, setPageNumber] = useState(1); // Current page number (1 is first page)
     const [resultsPerPage, setResultsPerPage] = useState(10);
-    const [searchType, setSearchType] = useState(SearchTypes.TITLE); 
+    const [searchType, setSearchType] = useState(SearchTypes.TITLE);
+
+    const searchQuery = useRef('')
 
     /**
      * This runs on component load, simply loads in list of ALL tags and list of
@@ -28,6 +30,10 @@ export const Search = () => {
         fetchAllTags();
         fetchInitialResults();
     }, [])
+
+    /**
+     * This runs upon the search results being updated
+     */
 
     /**
      * Gets the list of all tags
@@ -59,16 +65,74 @@ export const Search = () => {
         }
     }
 
+    const onSearchClick = async () => {
+        const searchValue = searchQuery.current.value
+        console.log(searchValue)
+
+        try {
+
+            // Search by title
+            if (searchType == SearchTypes.TITLE) {
+                
+                // Handle empty case
+                if (!searchValue) {
+                    fetchInitialResults();
+                    return
+                }
+                
+                const idResponse = await fetch(`http://localhost:4000/api/search/title/${searchValue}`);
+                const rawIdData = await idResponse.json()
+
+                console.log(rawIdData)
+
+                // raw data in array of objects like {_id: "id number"}, so convert that
+                const ids = rawIdData.map((obj) => obj._id);
+                console.log(ids);
+                setSearchResults(ids);
+            }
+            
+            // Search by tag
+            else {
+                const idResponse = await fetch(`http://localhost:4000/api/search/tag/${searchValue}`);
+                const rawIdData = await idResponse.json()
+
+                // raw data in array of objects like {_id: "id number"}, so convert that
+                const ids = rawIdData.map((obj) => obj._id);
+                console.log(ids);
+                setSearchResults(ids);
+            }
+        } catch (error) {
+            console.log("Search error occured:", error)
+        }
+    }
+
     return (
         <>
             <h5>
                 <center>Welcome to the Search Page</center>
             </h5>
-            <SearchBar></SearchBar>
+
+            <div className="search_container">
+                <input
+                    type="text"
+                    placeholder="Search by keyword, title, description"
+                    ref={searchQuery}
+                    style={{ width: '600px' }}
+                    onKeyDown={(event) => {
+                        if (event.key === 'Enter') {
+                            onSearchClick()
+                        }
+                    }}
+                />
+                <button onClick={onSearchClick} className='search_button'>
+                    <img src="/searchIcon.svg" alt="Search Icon"/>
+                </button>
+            </div>
+
             <div className='search_maincontent'>
                 <div className='search_results-container'>
                     {searchResults && searchResults.map(id => (
-                        <SearchResult userID={id}></SearchResult>
+                        <SearchResult key={id} userID={id}></SearchResult>
                     ))}
                 </div>
             </div>
