@@ -70,14 +70,14 @@ export const Search = () => {
 
         try {
 
+            // Handle empty case
+            if (!searchValue) {
+                fetchInitialResults();
+                return
+            }
+            
             // Search by title
             if (searchType == SearchTypes.TITLE) {
-                
-                // Handle empty case
-                if (!searchValue) {
-                    fetchInitialResults();
-                    return
-                }
                 
                 const idResponse = await fetch(`http://localhost:4000/api/search/title/${searchValue}`);
                 const rawIdData = await idResponse.json()
@@ -118,15 +118,19 @@ export const Search = () => {
             <div className="search_container">
                 <input
                     type="text"
+                    list={searchType===SearchTypes.TAG ? 'tags-list' : ''}
                     placeholder="Search by keyword, title, description"
                     ref={searchQuery}
                     style={{ width: '600px' }}
                     onKeyDown={(event) => {
-                        if (event.key === 'Enter') {
-                            onSearchClick()
-                        }
+                        if (event.key === 'Enter') onSearchClick();
                     }}
                 />
+                <datalist id='tags-list'>
+                    {tags && tags.map(tag => (
+                        <option value={tag}/>
+                    ))}
+                </datalist>
                 <button onClick={onSearchClick} className='search_button'>
                     <img src="/searchIcon.svg" alt="Search Icon"/>
                 </button>
