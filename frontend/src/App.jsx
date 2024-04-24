@@ -11,6 +11,7 @@ import { Search } from './pages/search'
 
 import { NavigationBar } from './components/NavigationBar';
 import './styles/App.css';
+import { EditProfile } from './pages/editprofile';
 
 /**
  * msal-react is built on the React context API and all parts of your app that require authentication must be
@@ -30,6 +31,7 @@ const App = ({ instance }) => {
                     <Routes>
                         <Route path='/' element={<Home/>} />
                         <Route path='/search' element={<Search/>} />
+                        <Route path='/editprofile' element={<EditProfile/>}/>
                     </Routes>
                 </div>
             </MsalProvider>

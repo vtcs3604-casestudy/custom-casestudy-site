@@ -38,10 +38,6 @@ a {
     margin: 0 0.5rem;
 }
 
-/* .navbarStyle {
-    padding: 0.5rem 1rem !important;
-} */
-
 .navbarButton {
     color: #fff !important;
     padding: 0.5rem 1rem !important;
@@ -50,10 +46,6 @@ a {
 .iconText {
     margin: 0 0.5rem;
 }
-
-/* .navbarStyle {
-    padding: 0.5rem 1rem;
-} */
 
 .navbarButton {
     color: #fff !important;
@@ -98,50 +90,67 @@ a {
 
 .card-title {
     text-align: center;
+    margin-top: 50px;
+    margin-bottom: 50px;
 }
 
-.signInButton {
-    background-color: #E5751F;
-    margin: 1rem;
-}
+
+/* NAVIGATION BAR STYLING */
 
 .navbarStyle {
+    background-color: #861f41;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.navbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0.5rem 1rem !important
+    padding: 1rem 1.5rem;
 }
 
-.navbar-brand {
-    /* font-size: 1.0rem;
+.navbar-logo {
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: 400;
     margin: 1rem;
-    text-decoration: none; */
-    color: white;
+    text-decoration: none;   
 }
 
-.mr-auto {
+.nav-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.nav-item {
     display: flex;
     align-items: center;
-    gap: 2.5rem;
-    margin: 1rem;
-    margin-right: 4.9vw;
-    position: absolute;
-    right: 0;
-    padding: 5px 25px;
+    margin-left: 4rem;
+    color: white;
+    list-style: none;
 }
 
-/* removes bullet points */
-.mr-auto li {
-    list-style-type: none; 
+.nav-link {
+    font-size: 1.6rem;
+    font-weight: 400;
 }
 
-.mr-auto li a {
-    display: block;
+.log-btn {
+    background-color: #E5751F;
     color: #fff;
-    text-decoration: none;
-    
+    border-radius: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 1.2rem;
+    margin-right: 1rem;
+    color:black;
 }
 
+/* SEARCH BAR STYLING */
 .search-container {
     display: flex;
     justify-content: center;
@@ -157,24 +166,10 @@ a {
     color: #fff;
     background-color: #861f41;
     
-    /* padding: 0px;
-    border: 0px;
-    background-color: white; */
-
-    
 }
 
 .search-container input[type=text]{
     padding: 6px 30px;
     border-radius: 5px;
     border: 2px solid #ccc;
-}
-
-.proj-des {
-    display: flex;
-    justify-content: center;
-    font-size: 20px;
-    margin-top: 5rem;
-    margin-left: 30rem;
-    margin-right: 30rem;
 }

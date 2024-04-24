@@ -3,7 +3,6 @@ import {
   UnauthenticatedTemplate,
   useMsal,
 } from "@azure/msal-react";
-import { Navbar } from "react-bootstrap";
 import { loginRequest } from "../authConfig";
 import { Link } from "react-router-dom";
 
@@ -46,32 +45,33 @@ export const NavigationBar = () => {
    */
   return (
     <>
-      <Navbar style={{ backgroundColor: '#861f41' }} variant="dark" className="navbarStyle" expand="md"> 
-      
-        <a className="navbar-brand" href="/">
-            Home
-        </a>
-            <ul className="mr-auto">
-                <li>
-                    <Link to="/search">Search</Link>
-                </li>
-                <AuthenticatedTemplate>
-                    <li>
-                        <Link to="/search">Edit Profile</Link>
+    
+        <header className="navbarStyle"> 
+          <nav className="navbar">
+            <a className="navbar-logo" href="/">Home</a>
+                <ul className="nav-menu">
+                    <li className="nav-item">
+                        <Link to="/search" className="nav-link">Search</Link>
                     </li>
+                    <AuthenticatedTemplate>
+                        <li className="nav-item">
+                            <Link to="/editprofile" className="nav-link">Edit Profile</Link>
+                        </li>
+                    </AuthenticatedTemplate>
+                    <AuthenticatedTemplate>
+                  <div className="nav-item">
+                    <button onClick={handleLogoutPopup} className="log-btn">Log Out</button>
+                  </div>
                 </AuthenticatedTemplate>
-            </ul>
-        <AuthenticatedTemplate>
-          <div className="collapse navbar-collapse justify-content-end">
-            <button onClick={handleLogoutPopup} style={{ backgroundColor: '#E5751F', color: '#ffffff', borderRadius: '5px' }}>Log Out</button>
-          </div>
-        </AuthenticatedTemplate>
-        <UnauthenticatedTemplate>
-          <div className="collapse navbar-collapse justify-content-end" >
-            <button onClick={handleLoginPopup} style={{ backgroundColor: '#E5751F', color: '#ffffff', borderRadius: '5px' }}>Log In</button>
-          </div>
-        </UnauthenticatedTemplate>
-      </Navbar>
+                <UnauthenticatedTemplate>
+                  <div className="nav-item" >
+                    <button onClick={handleLoginPopup}className="log-btn">Log In</button>
+                  </div>
+                </UnauthenticatedTemplate>
+                </ul>
+
+            </nav>
+        </header>
     </>
   );
 };

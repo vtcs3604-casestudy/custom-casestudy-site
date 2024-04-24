@@ -1,0 +1,39 @@
+.edit-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+}
+
+label {
+    font-size: 20px;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    padding-right: 10px;
+    display: block;
+}
+
+
+/*For the save/cancel buttons */
+.save-cancel-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.save-btn {
+    margin: 10px;
+    padding: 10px 30px;
+    border: 2px solid #ccc;
+    color: #fff;
+    background-color: var(--vt-maroon);
+}
+
+.cancel-btn {
+    margin: 10px;
+    padding: 10px 30px;
+    border: 2px solid #ccc;
+    color: white;
+    background-color: gray;
+}
