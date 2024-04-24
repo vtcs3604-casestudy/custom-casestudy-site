@@ -1,3 +1,24 @@
+/*
+Site wide colors from Virginia Tech
+*/
+:root {
+    /* Primary colors */
+    --vt-maroon:#861f41;
+    --vt-burntOrange:#e5751f;
+    --vt-hokieStone: #75787b;
+    --vt-white: #ffffff;
+  
+    /* Secondary colors */
+    --vt-purple: #642667;
+    --vt-pink: #ce0058;
+    --vt-yellow: #f7ea48;
+    --vt-teal: #508590;
+    --vt-turquoise: #2cd5c4;
+    --vt-grey: #d7d2cb;
+    --vt-smoke: #e5e1e6;
+    --vt-impactOrange: #ca4f00;
+}
+
 footer {
     position: fixed;
     bottom: 0%;
