@@ -1,6 +1,5 @@
 import { React, useEffect, useRef, useState } from 'react';
 import { SearchResult } from '../../components/SearchResult/SearchResult';
-import SearchBar from '../../components/SearchBar';
 import './search.css'
 
 /**
@@ -10,8 +9,8 @@ export const Search = () => {
     
     // Pseudo enum for types of search
     const SearchTypes = {
-        TITLE: "title",
-        TAG: "tag"
+        TITLE: "Title",
+        TAG: "Tag"
     }
 
     const [tags, setTags] = useState(null); // List of tags, created on initial load
@@ -106,6 +105,10 @@ export const Search = () => {
         }
     }
 
+    const onTypeClick = (type) => {
+        setSearchType(type);
+    }
+
     return (
         <>
             <h5>
@@ -127,6 +130,20 @@ export const Search = () => {
                 <button onClick={onSearchClick} className='search_button'>
                     <img src="/searchIcon.svg" alt="Search Icon"/>
                 </button>
+            </div>
+
+            <div className='search_type-toggle-container'>
+                <p className='search_type-description'>Search by Title or Tag</p>
+                <button 
+                    className='search_type-button'
+                    onClick={() => onTypeClick(SearchTypes.TITLE)}
+                    style={{backgroundColor: searchType === SearchTypes.TITLE ? '#861f41' : 'gray'}}
+                >{SearchTypes.TITLE}</button>
+                <button 
+                    className='search_type-button'
+                    onClick={() => onTypeClick(SearchTypes.TAG)}
+                    style={{backgroundColor: searchType === SearchTypes.TAG ? '#861f41' : 'gray'}}
+                >{SearchTypes.TAG}</button>
             </div>
 
             <div className='search_maincontent'>
