@@ -1,4 +1,7 @@
 import { React, useEffect, useState } from 'react';
+import { SearchResult } from '../../components/SearchResult/SearchResult';
+import SearchBar from '../../components/SearchBar';
+import './search.css'
 
 /**
  * Creates a dummy search page
@@ -61,15 +64,14 @@ export const Search = () => {
             <h5>
                 <center>Welcome to the Search Page</center>
             </h5>
-
-            {tags && tags.map(tag => (
-                <p>{tag}</p>
-            ))}
-
-            {searchResults && searchResults.map(id => (
-                <p>{id}</p>
-            ))}
-
+            <SearchBar></SearchBar>
+            <div className='search_maincontent'>
+                <div className='search_results-container'>
+                    {searchResults && searchResults.map(id => (
+                        <SearchResult userID={id}></SearchResult>
+                    ))}
+                </div>
+            </div>
         </>
     )
 }

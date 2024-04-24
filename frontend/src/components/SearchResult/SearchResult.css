@@ -1,0 +1,17 @@
+.searchresult_container {
+  width: 300px;
+  margin: 25px;
+  padding: 5px;
+  border: 1px solid black;
+}
+
+.searchresult_file-preview {
+  background-color: var(--vt-smoke);
+  height: 400px;
+}
+
+.searchresult_tags {
+  display: flex;
+  flex-direction: row;
+  column-gap: 10px;
+}

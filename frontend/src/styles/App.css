@@ -29,6 +29,11 @@ footer {
     text-align: center;
 }
 
+/* Override default link color */
+a {
+    color: var(--vt-burntOrange) !important;
+}
+
 .iconText {
     margin: 0 0.5rem;
 }
