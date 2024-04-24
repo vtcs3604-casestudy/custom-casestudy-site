@@ -1,11 +1,23 @@
 const express = require('express')
 const multer = require('multer')
+const path = require('path');
+const fs = require('fs');
 
 const router = express.Router()
 
-router.get('/:id', (req, res) => {
-  res.json({mssg: 'GET file'})
-})
+router.get('/:fileName', (req, res) => {
+  const fileName = req.params.fileName;
+  const filePath = path.join(__dirname, "../../frontend/public/files/", fileName);
+  console.log('Looking for file at:', filePath);
+  // Check if the file exists
+  if (fs.existsSync(filePath)) {
+    // Send the file to the client
+    res.sendFile(filePath);
+  } else {
+    // If the file does not exist, send a 404 response
+    res.status(404).json({ message: 'File not found' });
+  }
+});
 
 router.patch('/:id', (req, res) => {
   res.json({mssg: 'UPDATE file'})
