@@ -13,6 +13,19 @@ const getProfile = async (req, res) => {
   res.status(200).json(profile)
 }
 
+// Get profile but by id
+const getProfileById = async (req, res) => {
+  const {id} = req.params
+
+  const profile = await Profile.findOne({_id: id})
+
+  if (!profile) {
+    return res.status(400).json({error: 'No such profile'})
+  }
+
+  res.status(200).json(profile)
+}
+
 // Update profile
 const updateProfile = async (req, res) => {
   const { username } = req.params
@@ -45,5 +58,6 @@ const createProfile = async (req, res) => {
 module.exports = {
   createProfile,
   getProfile,
-  updateProfile
+  updateProfile,
+  getProfileById
 }
