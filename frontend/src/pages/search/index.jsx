@@ -14,7 +14,7 @@ export const Search = () => {
     }
 
     const [tags, setTags] = useState(null); // List of tags, created on initial load
-    const [searchResults, setSearchResults] = useState(null); // List of user ids returned from search
+    const [searchResults, setSearchResults] = useState([]); // List of user ids returned from search
     const [pageNumber, setPageNumber] = useState(1); // Current page number (1 is first page)
     const [resultsPerPage, setResultsPerPage] = useState(10);
     const [searchType, setSearchType] = useState(SearchTypes.TITLE);
@@ -29,6 +29,11 @@ export const Search = () => {
         fetchAllTags();
         fetchInitialResults();
     }, [])
+
+    // Updates upon a new search
+    useEffect(() => {
+        setPageNumber(1)
+    }, [searchResults])
 
     /**
      * This runs upon the search results being updated
@@ -77,7 +82,7 @@ export const Search = () => {
             }
             
             // Search by title
-            if (searchType == SearchTypes.TITLE) {
+            if (searchType === SearchTypes.TITLE) {
                 
                 const idResponse = await fetch(`http://localhost:4000/api/search/title/${searchValue}`);
                 const rawIdData = await idResponse.json()
@@ -109,6 +114,20 @@ export const Search = () => {
         setSearchType(type);
     }
 
+    const onResultsPerPageChange = (event) => {
+        const newValue = parseInt(event.target.value, 10); // Convert value to integer
+        setResultsPerPage(newValue);
+    };
+
+    const onPageChange = (type) => {
+        if (type === "INC" && pageNumber < Math.ceil(searchResults.length / resultsPerPage)) {
+            setPageNumber(pageNumber + 1);
+        }
+        else if (type === "DEC" && pageNumber > 0) {
+            setPageNumber(pageNumber - 1);
+        }
+    }
+
     return (
         <>
             <h5>
@@ -136,6 +155,20 @@ export const Search = () => {
                 </button>
             </div>
 
+            <div className='search_page-container'>
+                <div className='search_page-num-wrapper'>
+                    <button className='search_page-button' id='prev-page' onClick={() => onPageChange("DEC")}>&lt;</button>
+                    <p>Page {pageNumber} of {Math.ceil((searchResults.length/resultsPerPage))}</p>
+                    <button className='search_page-button' id='prev-page' onClick={() => onPageChange("INC")}>&gt;</button>
+                </div>
+                <label>Items per page</label>
+                <select id='resultsPerPageSelect' value={resultsPerPage} onChange={onResultsPerPageChange}>
+                    <option value='1'>1</option>
+                    <option value='10'>10</option>
+                    <option value='25'>25</option>
+                </select>
+            </div>
+
             <div className='search_type-toggle-container'>
                 <p className='search_type-description'>Search by Title or Tag</p>
                 <button 
@@ -152,7 +185,9 @@ export const Search = () => {
 
             <div className='search_maincontent'>
                 <div className='search_results-container'>
-                    {searchResults && searchResults.map(id => (
+                    {searchResults && searchResults
+                    .slice((pageNumber - 1) * resultsPerPage, pageNumber * resultsPerPage)
+                    .map(id => (
                         <SearchResult key={id} userID={id}></SearchResult>
                     ))}
                 </div>

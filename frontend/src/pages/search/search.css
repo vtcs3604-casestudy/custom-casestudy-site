@@ -23,6 +23,12 @@
   background-color: var(--vt-maroon);
 }
 
+/* Page number navigation stuff */
+.search_page-num-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
 /* Handle the toggle button section */
 .search_type-toggle-container {
   display: flex;
