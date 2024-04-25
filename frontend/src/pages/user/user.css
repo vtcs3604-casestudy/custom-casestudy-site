@@ -1,0 +1,30 @@
+.userpage_main-content {
+  display: flex;
+  justify-content: center;
+}
+
+.userpage_main-wrapper {
+  max-width: 900px;
+  width: 100%;
+}
+
+/* Tag section */
+.userpage_tag-group {
+  display: flex;
+  justify-content: left;
+  flex-wrap: wrap;
+}
+
+.userpage_tag-label {
+  margin: 5px 10px;
+}
+
+.userpage_tag-header {
+  margin: 5px 0px;
+}
+
+/* PDF section */
+.userpage_pdf {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
