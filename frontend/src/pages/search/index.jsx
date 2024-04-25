@@ -1,6 +1,7 @@
 import { React, useEffect, useRef, useState } from 'react';
 import { SearchResult } from '../../components/SearchResult/SearchResult';
 import './search.css'
+import API_HOSTNAME from '../../config';
 
 /**
  * Creates a dummy search page
@@ -44,7 +45,7 @@ export const Search = () => {
      */
     const fetchAllTags = async () => {
         try {
-            const tagResponse = await fetch('http://localhost:4000/api/search/tags');
+            const tagResponse = await fetch(`${API_HOSTNAME}/api/search/tags`);
             const tagData = await tagResponse.json();
             
             setTags(tagData)
@@ -59,7 +60,7 @@ export const Search = () => {
      */
     const fetchInitialResults = async () => {
         try {
-            const idResponse = await fetch('http://localhost:4000/api/search/all');
+            const idResponse = await fetch(`${API_HOSTNAME}/api/search/all`);
             const idData = await idResponse.json();
             
             setSearchResults(idData)
@@ -84,7 +85,7 @@ export const Search = () => {
             // Search by title
             if (searchType === SearchTypes.TITLE) {
                 
-                const idResponse = await fetch(`http://localhost:4000/api/search/title/${searchValue}`);
+                const idResponse = await fetch(`${API_HOSTNAME}/api/search/title/${searchValue}`);
                 const rawIdData = await idResponse.json()
 
                 console.log(rawIdData)
@@ -97,7 +98,7 @@ export const Search = () => {
             
             // Search by tag
             else {
-                const idResponse = await fetch(`http://localhost:4000/api/search/tag/${searchValue}`);
+                const idResponse = await fetch(`${API_HOSTNAME}/api/search/tag/${searchValue}`);
                 const rawIdData = await idResponse.json()
 
                 // raw data in array of objects like {_id: "id number"}, so convert that

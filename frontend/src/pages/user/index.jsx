@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import './user.css';
+import API_HOSTNAME from '../../config';
 
 export const UserPage = () => {
   
@@ -20,7 +21,7 @@ export const UserPage = () => {
 
   const fetchUserData = async () => {
     try {
-      const response = await fetch(`http://localhost:4000/api/profile/${username}`);
+      const response = await fetch(`${API_HOSTNAME}/api/profile/${username}`);
       const parsedUserData = await response.json();
       setUserData(parsedUserData);
     } catch (error) {
@@ -31,7 +32,7 @@ export const UserPage = () => {
   const fetchPdf = async () => {
     try {
       console.log(userData.documentId)
-      const response = await fetch(`http://localhost:4000/files/${userData.documentId}`);
+      const response = await fetch(`${API_HOSTNAME}/files/${userData.documentId}`);
       const pdfBlob = await response.blob();
       const url = URL.createObjectURL(pdfBlob);
       setPdfUrl(url);
