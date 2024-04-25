@@ -3,6 +3,7 @@
 # Ignore config files, see the github for information
 /src/authConfig.js
 /src/config.js
+.env
 
 # Ignore files
 /public/files
