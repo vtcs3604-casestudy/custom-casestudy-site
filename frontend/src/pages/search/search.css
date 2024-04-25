@@ -1,14 +1,22 @@
-.search_maincontent {
+.search_maincontent-wrapper {
   display: flex;
   justify-content: center;
 }
 
-.search_results-container {
-  display: flex;
-  flex-direction: row;
-  max-width: 1200px;
+.search_maincontent {
+  width: fit-content;
+  padding: 5px;
 }
 
+.search_results-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Search bar section */
 .search_container {
   display: flex;
   justify-content: center;
@@ -16,17 +24,52 @@
   margin-top: 50px;
 }
 
+.search_text-bar {
+  width: 100%;
+  border-radius: 5px 0px 0px 5px;
+}
+
+#typeSelect {
+  border-radius: 0px;
+}
+
 .search_button {
   padding: 6px 30px;
   border: 2px solid #ccc;
   color: #fff;
   background-color: var(--vt-maroon);
+  border-radius: 0px 5px 5px 0px;
+  border: solid 2px black;
 }
 
 /* Page number navigation stuff */
+.search_page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.search_per-page-label {
+  margin-right: 5px;
+}
+
 .search_page-num-wrapper {
   display: flex;
   justify-content: center;
+  align-items: center;
+  margin: 10px;
+  margin-right: 40px;
+}
+
+.search_page-button {
+  padding: 5px;
+  margin: 1px;
+  border-radius: 5px;
+}
+
+.search_page-readout {
+  padding: 0px 10px;
+  margin-bottom: 0px;
 }
 
 /* Handle the toggle button section */
@@ -42,7 +85,7 @@
 
 .search_type-button {
   margin: 10px;
-  padding: 10px 30px;
+  padding: 5px 15px;
   border-radius: 10px;
   color: var(--vt-white);
 }

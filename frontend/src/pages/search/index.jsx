@@ -110,8 +110,8 @@ export const Search = () => {
         }
     }
 
-    const onTypeClick = (type) => {
-        setSearchType(type);
+    const onTypeClick = (event) => {
+        setSearchType(event.target.value);
     }
 
     const onResultsPerPageChange = (event) => {
@@ -133,63 +133,52 @@ export const Search = () => {
             <h5>
                 <center>Welcome to the Search Page</center>
             </h5>
+            <div className='search_maincontent-wrapper'>
+                <div className='search_maincontent'>
+                    <div className="search_container">
+                        <input className='search_text-bar'
+                            type="text"
+                            list={searchType===SearchTypes.TAG ? 'tags-list' : ''}
+                            placeholder="Search by keyword, title, description"
+                            ref={searchQuery}
+                            onKeyDown={(event) => {
+                                if (event.key === 'Enter') onSearchClick();
+                            }}
+                        />
+                        <datalist id='tags-list'>
+                            {tags && tags.map(tag => (
+                                <option value={tag}/>
+                            ))}
+                        </datalist>
+                        <select id='typeSelect' value={searchType} onChange={onTypeClick}>
+                            <option value={SearchTypes.TITLE}>Title</option>
+                            <option value={SearchTypes.TAG}>Tag</option>
+                        </select>
+                        <button onClick={onSearchClick} className='search_button'>
+                            <img src="/searchIcon.svg" alt="Search Icon"/>
+                        </button>
+                    </div>
 
-            <div className="search_container">
-                <input
-                    type="text"
-                    list={searchType===SearchTypes.TAG ? 'tags-list' : ''}
-                    placeholder="Search by keyword, title, description"
-                    ref={searchQuery}
-                    style={{ width: '600px' }}
-                    onKeyDown={(event) => {
-                        if (event.key === 'Enter') onSearchClick();
-                    }}
-                />
-                <datalist id='tags-list'>
-                    {tags && tags.map(tag => (
-                        <option value={tag}/>
-                    ))}
-                </datalist>
-                <button onClick={onSearchClick} className='search_button'>
-                    <img src="/searchIcon.svg" alt="Search Icon"/>
-                </button>
-            </div>
-
-            <div className='search_page-container'>
-                <div className='search_page-num-wrapper'>
-                    <button className='search_page-button' id='prev-page' onClick={() => onPageChange("DEC")}>&lt;</button>
-                    <p>Page {pageNumber} of {Math.ceil((searchResults.length/resultsPerPage))}</p>
-                    <button className='search_page-button' id='prev-page' onClick={() => onPageChange("INC")}>&gt;</button>
-                </div>
-                <label>Items per page</label>
-                <select id='resultsPerPageSelect' value={resultsPerPage} onChange={onResultsPerPageChange}>
-                    <option value='1'>1</option>
-                    <option value='10'>10</option>
-                    <option value='25'>25</option>
-                </select>
-            </div>
-
-            <div className='search_type-toggle-container'>
-                <p className='search_type-description'>Search by Title or Tag</p>
-                <button 
-                    className='search_type-button'
-                    onClick={() => onTypeClick(SearchTypes.TITLE)}
-                    style={{backgroundColor: searchType === SearchTypes.TITLE ? '#861f41' : 'gray'}}
-                >{SearchTypes.TITLE}</button>
-                <button 
-                    className='search_type-button'
-                    onClick={() => onTypeClick(SearchTypes.TAG)}
-                    style={{backgroundColor: searchType === SearchTypes.TAG ? '#861f41' : 'gray'}}
-                >{SearchTypes.TAG}</button>
-            </div>
-
-            <div className='search_maincontent'>
-                <div className='search_results-container'>
-                    {searchResults && searchResults
-                    .slice((pageNumber - 1) * resultsPerPage, pageNumber * resultsPerPage)
-                    .map(id => (
-                        <SearchResult key={id} userID={id}></SearchResult>
-                    ))}
+                    <div className='search_page-container'>
+                        <div className='search_page-num-wrapper'>
+                            <button className='search_page-button' id='prev-page' onClick={() => onPageChange("DEC")}>&lt;</button>
+                            <p className='search_page-readout'>Page {pageNumber} of {Math.ceil((searchResults.length/resultsPerPage))}</p>
+                            <button className='search_page-button' id='prev-page' onClick={() => onPageChange("INC")}>&gt;</button>
+                        </div>
+                        <select id='resultsPerPageSelect' value={resultsPerPage} onChange={onResultsPerPageChange}>
+                            <option value='12'>12 per page</option>
+                            <option value='24'>24 per page</option>
+                            <option value='48'>48 per page</option>
+                        </select>
+                    </div>
+                    
+                    <div className='search_results-container'>
+                        {searchResults && searchResults
+                        .slice((pageNumber - 1) * resultsPerPage, pageNumber * resultsPerPage)
+                        .map(id => (
+                            <SearchResult key={id} userID={id}></SearchResult>
+                        ))}
+                    </div>
                 </div>
             </div>
         </>
