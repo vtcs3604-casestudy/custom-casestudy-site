@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.get('/:fileName', (req, res) => {
   const fileName = req.params.fileName;
-  const filePath = path.join(__dirname, "../../frontend/public/files/", fileName);
+  const filePath = path.join(__dirname, "../../files/", fileName);
   console.log('Looking for file at:', filePath);
   // Check if the file exists
   if (fs.existsSync(filePath)) {
