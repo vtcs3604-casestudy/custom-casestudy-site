@@ -11,8 +11,8 @@ const profileSchema = new Schema({
     type: String,
     required: true
   },
-  documentId: {
-    type: String,
+  documents: {
+    type: [String],
     required: true
   },
   tags: {

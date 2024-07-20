@@ -43,11 +43,11 @@ const updateProfile = async (req, res) => {
 
 // Create profile
 const createProfile = async (req, res) => {
-  const {title, username, documentId, tags} = req.body
+  const {title, username, documents, tags} = req.body
 
   // Add profile to db
   try {
-    const profile = await Profile.create({title, username, documentId, tags})
+    const profile = await Profile.create({title, username, documents, tags})
     res.status(200).json(profile)
   } catch (error) {
     res.status(400).json({error: error.message})

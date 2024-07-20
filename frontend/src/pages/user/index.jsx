@@ -1,22 +1,17 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom'
 import './user.css';
 
 export const UserPage = () => {
 
   const { username } = useParams();
   const [userData, setUserData] = useState({})
-  const [pdfUrl, setPdfUrl] = useState(null);
 
   // Runs on component load to get user data
   useEffect(() => {
     fetchUserData();
   }, [])
-
-  // Loads the pdf
-  useEffect(() => {
-    fetchPdf();
-  }, [userData]);
 
   const fetchUserData = async () => {
     try {
@@ -25,18 +20,6 @@ export const UserPage = () => {
       setUserData(parsedUserData);
     } catch (error) {
       console.error('Error fetching user data:', error);
-    }
-  }
-
-  const fetchPdf = async () => {
-    try {
-      // console.log(userData.documentId)
-      // const response = await fetch(`${process.env.REACT_APP_API_HOSTNAME}/files/${username}/${userData.documentId}`);
-      // const pdfBlob = await response.blob();
-      // const url = URL.createObjectURL(pdfBlob);
-      setPdfUrl(`${process.env.REACT_APP_FILE_HOSTNAME}/${username}/${userData.documentId}`);
-    } catch (error) {
-      console.error('Error fetching PDF:', error);
     }
   }
   
@@ -53,9 +36,11 @@ export const UserPage = () => {
             <p className="userpage_tag-label">{tag}</p>
           ))}
         </div>
-        {pdfUrl && (
-        <iframe src={pdfUrl} className="userpage_pdf"/>
-      )}
+        <div>
+          {userData.documents && userData.documents.map(doc => (
+            <Link to={`${process.env.REACT_APP_FILE_HOSTNAME}/${userData.username}/${doc}`}>{doc}</Link>
+          ))}
+        </div>
       </div>
     </div>
   )
