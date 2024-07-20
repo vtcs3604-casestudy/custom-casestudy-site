@@ -1,6 +1,7 @@
 const multer = require('multer')
 const path = require('path');
 const fs = require('fs');
+const Profile = require('../models/profileModel')
 
 
 // Files config
@@ -26,8 +27,7 @@ const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
     const username = req.params.username;
     const userDir = path.join(FILE_DIRECTORY, username);
-    await fs.existsSync(userDir);
-    
+    fs.existsSync(userDir);
     cb(null, userDir)
   },
   filename: (req, file, cb) => {
@@ -63,13 +63,14 @@ const getFile = async (req, res) => {
 
 // route uploading a new file
 const postFile = async (req, res) => {
-  upload.single('file')(req, res, (err) => {
+  upload.single('file')(req, res, async (err) => {
     if (err) {
       return res.status(500).json({ error: 'Error uploading file' });
     }
     if (!req.file) {
       return res.status(400).json({ error: 'No file uploaded' });
     }
+    const profile = await Profile.updateOne({username: req.params.username}, { $push: {documents: req.file.originalname}})
     res.status(201).json({ message: 'File uploaded successfully', filename: req.file.originalname });
   });
 
@@ -83,6 +84,7 @@ const deleteFile = async (req, res) => {
   try {
     if (fs.existsSync(filePath)) {
       fs.rmSync(filePath);
+      const profile = await Profile.updateOne({username: req.params.username}, { $pull: {documents: fileName}})
       res.status(202).json({ message: 'File deleted successfully' });
     } else {
       res.status(404).json({ error: 'File not found' });

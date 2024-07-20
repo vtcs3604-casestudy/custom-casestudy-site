@@ -38,7 +38,9 @@ export const UserPage = () => {
         </div>
         <div>
           {userData.documents && userData.documents.map(doc => (
-            <Link to={`${process.env.REACT_APP_FILE_HOSTNAME}/${userData.username}/${doc}`}>{doc}</Link>
+            <div>
+              <Link to={`${process.env.REACT_APP_FILE_HOSTNAME}/${userData.username}/${doc}`}>{doc}</Link>
+            </div>
           ))}
         </div>
       </div>
