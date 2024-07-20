@@ -1,7 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import './editprofile.css'
 import { useParams } from 'react-router-dom';
-import API_HOSTNAME from '../../config';
 
 export const EditProfile = () => {
     const {username} = useParams();
@@ -18,7 +17,7 @@ export const EditProfile = () => {
 
     const fetchUserData = async() => {
         try {
-            const response = await fetch(`${API_HOSTNAME}/api/profile/${username}`);
+            const response = await fetch(`${process.env.REACT_APP_API_HOSTNAME}/api/profile/${username}`);
             const parsedUserData = await response.json();
             setUserData(parsedUserData);
             setTitle(parsedUserData.title); // Set title from fetched data
