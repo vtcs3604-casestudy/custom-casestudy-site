@@ -3,6 +3,7 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const path = require('path')
 
 // Routes import
 const profileRoutes = require('./routes/profile')
@@ -20,6 +21,9 @@ app.use((req, res, next) => {
   next()
 })
 
+// set up storage directory for file access
+app.use('/files', express.static('../files'))
+
 // *****************************************************************************
 // START OF ROUTES
 // *****************************************************************************
@@ -31,7 +35,7 @@ app.use('/api/search', searchRoutes)
 app.use('/api/profile', profileRoutes)
 
 // Routes for file access
-app.use('/files', fileRoutes)
+app.use('/api/files', fileRoutes)
 
 // *****************************************************************************
 // END OF ROUTES

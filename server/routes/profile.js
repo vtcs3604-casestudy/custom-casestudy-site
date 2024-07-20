@@ -8,7 +8,6 @@ const {
 
 const router = express.Router()
 
-
 router.get('/:username', getProfile)
 
 router.patch('/:username', updateProfile)
