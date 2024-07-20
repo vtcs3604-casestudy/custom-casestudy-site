@@ -30,11 +30,11 @@ export const UserPage = () => {
 
   const fetchPdf = async () => {
     try {
-      console.log(userData.documentId)
-      const response = await fetch(`${process.env.REACT_APP_API_HOSTNAME}/files/${username}/${userData.documentId}`);
-      const pdfBlob = await response.blob();
-      const url = URL.createObjectURL(pdfBlob);
-      setPdfUrl(url);
+      // console.log(userData.documentId)
+      // const response = await fetch(`${process.env.REACT_APP_API_HOSTNAME}/files/${username}/${userData.documentId}`);
+      // const pdfBlob = await response.blob();
+      // const url = URL.createObjectURL(pdfBlob);
+      setPdfUrl(`${process.env.REACT_APP_FILE_HOSTNAME}/${username}/${userData.documentId}`);
     } catch (error) {
       console.error('Error fetching PDF:', error);
     }
