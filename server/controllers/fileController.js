@@ -6,16 +6,16 @@ const fs = require('fs');
 // Files config
 // ----------------------------------------
 
-const fileDirectory = path.join(__dirname, "../../files");
+const FILE_DIRECTORY = path.join(__dirname, "../../files");
 
-const allowedTypes = [
+const ALLOWED_TYPES = [
   'application/pdf',
   'application/vnd.openxmlformats-officedocument.presentationml.presentation',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
 ];
 
 const fileFilter = (req, file, cb) => {
-  if (allowedTypes.includes(file.mimetype)) {
+  if (ALLOWED_TYPES.includes(file.mimetype)) {
     cb(null, true);
   } else {
     cb(new Error('Unsupported file type'), false);
@@ -25,7 +25,7 @@ const fileFilter = (req, file, cb) => {
 const storage = multer.diskStorage({
   destination: async (req, file, cb) => {
     const username = req.params.username;
-    const userDir = path.join(fileDirectory, username);
+    const userDir = path.join(FILE_DIRECTORY, username);
     await fs.existsSync(userDir);
     
     cb(null, userDir)
@@ -48,7 +48,7 @@ const upload = multer({
 const getFile = async (req, res) => {
   const fileName = req.params.fileName;
   const username = req.params.username;
-  const filePath = path.join(fileDirectory, username, fileName);
+  const filePath = path.join(FILE_DIRECTORY, username, fileName);
   console.log('Looking for file at:', filePath);
 
   // Check if the file exists
@@ -77,7 +77,19 @@ const postFile = async (req, res) => {
 
 // delete a file
 const deleteFile = async (req, res) => {
-  res.json({mssg: 'DELETE file'})
+  const fileName = req.params.fileName;
+  const username = req.params.username;
+  const filePath = path.join(FILE_DIRECTORY, username, fileName);
+  try {
+    if (fs.existsSync(filePath)) {
+      fs.rmSync(filePath);
+      res.status(202).json({ message: 'File deleted successfully' });
+    } else {
+      res.status(404).json({ error: 'File not found' });
+    }
+  } catch (err) {
+    res.status(500).json({ error: 'Error deleting file' });
+  }
 }
 
 module.exports = {

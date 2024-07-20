@@ -13,6 +13,6 @@ router.get('/:username/:fileName', getFile);
 
 router.post('/upload/:username', postFile)
 
-router.delete('/:id', deleteFile)
+router.delete('/:username/:fileName', deleteFile)
 
 module.exports = router
