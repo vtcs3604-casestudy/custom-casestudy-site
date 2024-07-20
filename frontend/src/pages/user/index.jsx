@@ -4,7 +4,7 @@ import './user.css';
 import API_HOSTNAME from '../../config';
 
 export const UserPage = () => {
-  
+
   const { username } = useParams();
   const [userData, setUserData] = useState({})
   const [pdfUrl, setPdfUrl] = useState(null);
@@ -32,7 +32,7 @@ export const UserPage = () => {
   const fetchPdf = async () => {
     try {
       console.log(userData.documentId)
-      const response = await fetch(`${API_HOSTNAME}/files/${userData.documentId}`);
+      const response = await fetch(`${API_HOSTNAME}/files/${username}/${userData.documentId}`);
       const pdfBlob = await response.blob();
       const url = URL.createObjectURL(pdfBlob);
       setPdfUrl(url);
