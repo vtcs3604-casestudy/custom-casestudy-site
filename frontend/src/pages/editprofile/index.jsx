@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from 'react';
+import { React, useEffect, useRef, useState } from 'react';
 import './editprofile.css'
 import { Link } from 'react-router-dom'
 import { AuthenticatedTemplate, useMsal, UnauthenticatedTemplate } from '@azure/msal-react';
@@ -15,7 +15,7 @@ export const EditProfile = () => {
   const [title, setTitle] = useState("");
   const [tags, setTags] = useState([]);
   const [currentTag, setCurrentTag] = useState("");
-  const [file, setFile] = useState(null);
+  const fileRef = useRef(null);
   const [documents, setDocuments] = useState([]);
 
   useEffect( () => {
@@ -77,6 +77,7 @@ export const EditProfile = () => {
 
   // Function to handle file submission
   const handleFileSubmit = async () => {
+    const file = fileRef.current.files[0];
     if (!file) {
       alert('Please select a file to upload.');
       return;
@@ -92,7 +93,7 @@ export const EditProfile = () => {
       });
 
       if (response.ok) {
-        //setDocuments(documents.concat[file.name])
+        setDocuments([...documents, file.name]);
         alert('File uploaded successfully.');
       } else {
         alert('File upload failed.');
@@ -101,6 +102,8 @@ export const EditProfile = () => {
       console.error('Error uploading file:', error);
       alert('Error uploading file.');
     }
+
+    fileRef.current.value = '';
   }
 
   return (
@@ -150,12 +153,7 @@ export const EditProfile = () => {
         </div>
           <div className="upload"> 
             <label htmlFor="file">Upload File:</label>
-            <input
-              type="file"
-              id="file"
-              name="file"
-              onChange={(e) => setFile(e.target.files[0])}
-            />
+            <input type="file" ref={fileRef} />
             <br /><br />
           </div>
           <div className="save-cancel-wrapper">
