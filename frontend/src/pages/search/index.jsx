@@ -155,7 +155,7 @@ export const Search = () => {
                             <option value={SearchTypes.TAG}>Tag</option>
                         </select>
                         <button onClick={onSearchClick} className='search_button'>
-                            <img src="/searchIcon.svg" alt="Search Icon"/>
+                            <img src="/images/searchIcon.svg" alt="Search Icon"/>
                         </button>
                     </div>
 
