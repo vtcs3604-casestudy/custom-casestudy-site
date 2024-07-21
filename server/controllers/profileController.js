@@ -54,10 +54,45 @@ const createProfile = async (req, res) => {
   }
 }
 
+// Add tag
+const addTag = async (req, res) => {
+  const { username, tag } = req.params
+  try {
+    const profile = await Profile.updateOne({username: username}, { $push: {tags: tag}})
+    res.status(200).json({ message: 'Tag Added'})
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
+
+// Remove tag
+const removeTag = async (req, res) => {
+  const { username, tag } = req.params
+  try {
+    const profile = await Profile.updateOne({username: username}, { $pull: {tags: tag}})
+    res.status(202).json({ message: 'Tag Deleted'})
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
+
+const updateTitle = async (req, res) => {
+  const { username, title } = req.params
+  try {
+    const profile = await Profile.updateOne({username: username}, {title: title})
+    res.status(200).json({ message: 'Title changed' })
+  } catch (error) {
+    res.status(400).json({error: error.message})
+  }
+}
+
 // Export functions
 module.exports = {
   createProfile,
   getProfile,
   updateProfile,
-  getProfileById
+  getProfileById,
+  addTag,
+  removeTag,
+  updateTitle
 }
