@@ -36,13 +36,16 @@ export const EditProfile = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  };
-
-  const handleCancel = () => {
-
-  };
+  const handleUpdateTitle = async() => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_HOSTNAME}/api/profile/title/${username}/${title}`,
+        {method: 'PATCH'}
+      )
+    } catch (error) {
+      console.error('Update failed:', error);
+    }
+  }
 
   const handleAddTag = async() => {
     try {
@@ -85,6 +88,7 @@ export const EditProfile = () => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required/>
+            <button onClick={() => handleUpdateTitle()}>Update Title</button>
             <br /><br />
           </div>
           <div className="tags">
@@ -119,7 +123,7 @@ export const EditProfile = () => {
           </div>
           <div className="save-cancel-wrapper">
             <button className="save-btn" type="submit">SAVE</button>
-            <button className="cancel-btn" type="button" onClick={handleCancel}>CANCEL</button>
+            <button className="cancel-btn" type="button">CANCEL</button>
           </div>
         </div>
       </AuthenticatedTemplate>    
