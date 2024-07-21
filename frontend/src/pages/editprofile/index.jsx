@@ -1,6 +1,6 @@
 import { React, useEffect, useState } from 'react';
 import './editprofile.css'
-import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import { AuthenticatedTemplate, useMsal, UnauthenticatedTemplate } from '@azure/msal-react';
 
 export const EditProfile = () => {
@@ -16,6 +16,7 @@ export const EditProfile = () => {
   const [tags, setTags] = useState([]);
   const [currentTag, setCurrentTag] = useState("");
   const [file, setFile] = useState(null);
+  const [documents, setDocuments] = useState([]);
 
   useEffect( () => {
     fetchUserData();
@@ -30,7 +31,7 @@ export const EditProfile = () => {
       setUserData(parsedUserData);
       setTitle(parsedUserData.title); // Set title from fetched data
       setTags(parsedUserData.tags); // Set tags from fetched data
-      setFile(parsedUserData.file)
+      setDocuments(parsedUserData.documents)
     } catch (error) {
       console.error('Error fetching user data:', error);
     }
@@ -74,6 +75,34 @@ export const EditProfile = () => {
     }
   };
 
+  // Function to handle file submission
+  const handleFileSubmit = async () => {
+    if (!file) {
+      alert('Please select a file to upload.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const response = await fetch(`${process.env.REACT_APP_API_HOSTNAME}/api/files/upload/${username}`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (response.ok) {
+        //setDocuments(documents.concat[file.name])
+        alert('File uploaded successfully.');
+      } else {
+        alert('File upload failed.');
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Error uploading file.');
+    }
+  }
+
   return (
     <>
       <AuthenticatedTemplate>
@@ -111,6 +140,14 @@ export const EditProfile = () => {
             </div>
             <br /><br />
           </div>
+          <div>
+          {documents && documents.map(doc => (
+            <div>
+              <Link to={`${process.env.REACT_APP_FILE_HOSTNAME}/${username}/${doc}`}>{doc}</Link>
+              <img src="/images/redTrashcanIcon.png" width="50" height="50" onClick={() => handleRemoveTag(doc)}/>
+            </div>
+          ))}
+        </div>
           <div className="upload"> 
             <label htmlFor="file">Upload File:</label>
             <input
@@ -122,7 +159,7 @@ export const EditProfile = () => {
             <br /><br />
           </div>
           <div className="save-cancel-wrapper">
-            <button className="save-btn" type="submit">SAVE</button>
+            <button className="save-btn" type="submit" onClick={() => handleFileSubmit()}>SAVE</button>
             <button className="cancel-btn" type="button">CANCEL</button>
           </div>
         </div>
