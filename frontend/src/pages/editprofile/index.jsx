@@ -106,6 +106,19 @@ export const EditProfile = () => {
     fileRef.current.value = '';
   }
 
+  const handleRemoveFile = async(document) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_HOSTNAME}/api/files/${username}/${document}`,
+        {method: 'DELETE'}
+      )
+      const newDocuments = documents.filter(doc => doc !== document)
+      setDocuments(newDocuments)
+    } catch (error) {
+      console.error('Update failed:', error);
+    }
+  }
+
   return (
     <>
       <AuthenticatedTemplate>
@@ -147,7 +160,7 @@ export const EditProfile = () => {
           {documents && documents.map(doc => (
             <div>
               <Link to={`${process.env.REACT_APP_FILE_HOSTNAME}/${username}/${doc}`}>{doc}</Link>
-              <img src="/images/redTrashcanIcon.png" width="50" height="50" onClick={() => handleRemoveTag(doc)}/>
+              <img src="/images/redTrashcanIcon.png" width="50" height="50" onClick={() => handleRemoveFile(doc)}/>
             </div>
           ))}
         </div>
