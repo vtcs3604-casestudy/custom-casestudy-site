@@ -8,13 +8,13 @@ export const EditProfile = () => {
   let activeAccount;
   if (instance) {
     activeAccount = instance.getActiveAccount();
-    console.log(activeAccount)
   }
   
   const username = activeAccount ? activeAccount.username : 'Unknown';
   const [userData, setUserData] = useState({});
   const [title, setTitle] = useState("");
   const [tags, setTags] = useState([]);
+  const [currentTag, setCurrentTag] = useState("");
   const [file, setFile] = useState(null);
 
   useEffect( () => {
@@ -45,12 +45,30 @@ export const EditProfile = () => {
   };
 
   const handleAddTag = async() => {
-      
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_HOSTNAME}/api/profile/tag/${username}/${currentTag}`,
+        {method: 'POST'}
+      )
+      setTags(tags.concat([currentTag]))
+      setCurrentTag("")
+    } catch (error) {
+      console.error('Update failed:', error);
+    }
   }
 
   // Function to handle removing a tag
-  const handleRemoveTag = (index) => {
-      
+  const handleRemoveTag = async (tagString) => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_API_HOSTNAME}/api/profile/tag/${username}/${tagString}`,
+        {method: 'DELETE'}
+      )
+      const newTags = tags.filter(tag => tag !== tagString)
+      setTags(newTags)
+    } catch (error) {
+      console.error('Update failed:', error);
+    }
   };
 
   return (
@@ -75,12 +93,17 @@ export const EditProfile = () => {
                 type="text"
                 id="tags"
                 name="tags"
-                value={tags}
-                onChange={(e) => setTags(e.target.value)}
+                value={currentTag}
+                onChange={(e) => setCurrentTag(e.target.value)}
             />
-            <button type="button" onClick={handleAddTag}>Add Tag</button>
+            <button onClick={() => handleAddTag()}>Add Tag</button>
             <div className="tag-wrapper">
-              
+              {tags && tags.map(tag => (
+                <div>
+                  <p>{tag}</p>
+                  <img src="/images/redTrashcanIcon.png" width="50" height="50" onClick={() => handleRemoveTag(tag)}/>
+                </div>
+              ))}
             </div>
             <br /><br />
           </div>
