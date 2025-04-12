@@ -1,12 +1,32 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Link } from 'react-router-dom'
+
+import useFetchWithMsal from '../../hooks/useFetchWithMsal';
+import { loginRequest, protectedResources } from "../../authConfig";
+
 import './user.css';
 
 export const UserPage = () => {
 
   const { username } = useParams();
   const [userData, setUserData] = useState({})
+
+  const { error, execute } = useFetchWithMsal({
+    scopes: protectedResources.apiProfile.scopes.write
+  });
+
+  useEffect(() => {
+    if (!userData) {
+      execute("GET", `${protectedResources.apiProfile.endpoint}/${username}`).then((response) => {
+        setUserData(response.json())
+      });
+    }
+  }, [execute, userData])
+
+  if (error) {
+    console.log("error");
+  }
 
   // Runs on component load to get user data
   useEffect(() => {
